@@ -14,14 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('workers', function (Blueprint $table) {
-            $table->engine = 'MyISAM';
-            $table->integer('id');
+            $table->id();
             $table->string('worker_id');
             $table->string('worker_name');
-            $table->integer('date');
+            $table->date('date');
             $table->float('hashrate');
             $table->float('reject');
-            $table->primary(['worker_id', 'date']);
             $table->timestamps();
         });
     }
