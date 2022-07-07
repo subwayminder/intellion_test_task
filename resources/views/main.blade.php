@@ -39,7 +39,6 @@
             <thead>
             <tr>
                 <th class="table-primary" scope="col">Воркер</th>
-                <th class="table-primary" scope="col">Модель</th>
                 @foreach($row['data_by_date'] as $k=>$data)
                     <th class="table-primary" scope="col">{{$k}}</th>
                 @endforeach
@@ -51,7 +50,6 @@
             </tr>
             <tr>
                 <td scope="row">{{$date}}</td>
-                <td>test</td>
                 @foreach($row['data_by_date'] as $data)
                     <td>
                         <span>{{$data['hashrate']}}</span>

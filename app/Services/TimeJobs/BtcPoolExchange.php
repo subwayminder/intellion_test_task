@@ -6,11 +6,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use App\Models\Worker;
 
 class BtcPoolExchange
 {
     private Client $client;
-    private string $modelClass;
 
     public function __construct(string $modelClass)
     {
@@ -18,7 +18,6 @@ class BtcPoolExchange
             'base_uri' => 'https://pool.api.btc.com/',
             'timeout' => 10.0
         ]);
-        $this->modelClass = $modelClass;
     }
 
     public function fetchData(int $page = 1): void
@@ -61,9 +60,9 @@ class BtcPoolExchange
     {
         foreach ($data as $item) {
             /** @var Model $row */
-            $row = $this->modelClass::where('worker_id', $item['worker_id'])
+            $row = Worker::where('worker_id', $item['worker_id'])
                 ->where('date', date('Y-m-d', $item['last_share_time']))->first();
-            $row = $row ?: new $this->modelClass();
+            $row = $row ?: new Worker();
             $row->worker_id = $item['worker_id'];
             $row->worker_name = $item['worker_name'];
             $row->date = date('Y-m-d', $item['last_share_time']);
